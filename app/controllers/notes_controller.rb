@@ -21,7 +21,8 @@ class NotesController < ApplicationController
   end
 
   def create
-    result = db.save(params[:note])
+    note = Note.new
+    result = db.save(note.update(params[:note]))
     respond_to do |wants|
       wants.html { redirect_to note_url(result["id"]) }
     end
@@ -33,7 +34,6 @@ class NotesController < ApplicationController
 
   def update
     @note = Note.new(db.get(params[:id]))
-    @note.updated_at = DateTime.now
     if db.save(@note.update(params[:note]))
       respond_to do |wants|
         wants.html { redirect_to note_url(@note) }

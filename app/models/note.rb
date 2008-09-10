@@ -5,4 +5,13 @@ class Note < BasicModel
     super(defaults.merge(attributes))
   end
 
+  ##
+  # Coerce things into the proper types of objects.
+  
+  def on_update
+    if (tags = @attributes['tags']) && tags.is_a?(String)
+      @attributes['tags'] = tags.split(" ")
+    end
+  end
+
 end

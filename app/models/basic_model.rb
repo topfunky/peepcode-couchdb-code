@@ -47,33 +47,40 @@ class BasicModel
   ##
   # Takes a Hash, merges with existing attributes, and returns them with
   # the intent that they will be serialized to JSON.
+  #
+  # Useful for sending to CouchRest's db.save method.
   
   def update(attributes)
-    @attributes.merge(attributes)
+    @attributes = @attributes.merge(attributes)
+    if new_record?
+      self.created_at = DateTime.now
+    end
+    self.updated_at = DateTime.now
+    self.on_update if self.respond_to?(:on_update)
+    @attributes
   end
+
+  ##
+  # Returns the ID so Rails can use it for forms.
   
   def id
     _id rescue nil
   end
   alias_method :to_param, :id
-  
+    
   def new_record?
     (_id && _rev).nil?
   rescue NameError
     true
   end
 
-  # def self.json_create(o)
-  #   new(*o['data'])
-  # end
-  # 
-  # def to_json(*a)
-  #   {
-  #     'json_class' => self.class.name,
-  #     'data' => @attributes
-  #   }.to_json(*a)
-  # end
-
+  ##
+  # Handles getters and setters for the first level of the hash.
+  #
+  #   record._rev
+  #   record.title
+  #   record.title = "Streetside bratwurst vendor"
+  
   def method_missing(method_symbol, *arguments)
     method_name = method_symbol.to_s
   

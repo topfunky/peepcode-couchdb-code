@@ -9,7 +9,7 @@
   <%= f.text_area :description %>
 
   <%= f.label "Tags (separated by spaces)" %>
-  <%= f.text_field "tags" %>
+  <%= f.text_field "tags", :value => @note.tags.join(" ") %>
 
   <%= f.label "Visited On" %>
   <%= f.text_field "visited_on", :id => "date" %>

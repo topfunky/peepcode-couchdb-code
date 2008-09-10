@@ -1,5 +1,7 @@
 <h1>Your Notes</h1>
 
+<p>+ <%= link_to "Add new", new_note_path %></p>
+
 <% @notes.rows.each do |note| %>
   <h2><%= link_to note.title, note_path(note) %></h2>
   <p><%= note.description %></p>

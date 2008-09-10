@@ -1,0 +1,80 @@
+!dark_yellow = #f9dc5b
+!light_yellow = #f7f5ab
+
+!light_grey = #999999
+
+.container
+  margin: 1em auto
+  width: 500px
+  padding: 1em 1.5em
+  background-color = !light_yellow
+  background-image: url(/images/note.png)
+  background-repeat: no-repeat
+  background-position: top right  
+
+#home
+  border-top: 1px solid white
+  padding: 0.5em
+  margin-top: 2em
+  text-align: right
+
+h1
+  margin-right: 3em
+  line-height: 1em
+
+form
+
+  label
+    display: block
+    margin-top: 1em
+    
+  textarea
+    height: 7em
+    
+  input#note_submit
+    display: block
+    margin-top: 1em
+    font-size: 2em
+    
+    
+.calendar 
+  background-color: #DDD
+  font-family: verdana, helvetica, sans-serif
+  font-size: 80%
+  color: black
+  cursor: pointer
+  width: 200px
+  border-collapse: collapse
+  border: 1px solid #DDD
+
+  th
+    padding: 2px
+
+  a
+    color: #000
+    text-decoration: none
+
+  td
+    padding: 2px
+    background-color: #FFF
+    border: 1px solid #DDD
+    text-align: center
+  
+  td.selected
+    background-color: #AAA
+
+  td.selected a
+    color: #fff
+
+  td.weekend
+    background-color: #EEE
+
+  td.today
+    background-color: yellow
+
+    a
+      color: black
+
+  td.day a:hover
+    color: white
+

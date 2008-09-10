@@ -1,0 +1,19 @@
+<% form_for @note do |f| %>
+  
+  <%= couchdb_rev_field f, @note %>
+  
+  <%= f.label "Title" %>
+  <%= f.text_field :title %>
+  
+  <%= f.label "Description" %>
+  <%= f.text_area :description %>
+
+  <%= f.label "Tags (separated by spaces)" %>
+  <%= f.text_field "tags" %>
+
+  <%= f.label "Visited On" %>
+  <%= f.text_field "visited_on", :id => "date" %>
+
+  <%= f.submit "Save" %>
+  
+<% end %>

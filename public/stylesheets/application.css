@@ -1,0 +1,60 @@
+.container {
+  margin: 1em auto;
+  width: 500px;
+  padding: 1em 1.5em;
+  background-color: #f7f5ab;
+  background-image: url(/images/note.png);
+  background-repeat: no-repeat;
+  background-position: top right; }
+
+#home {
+  border-top: 1px solid white;
+  padding: 0.5em;
+  margin-top: 2em;
+  text-align: right; }
+
+h1 {
+  margin-right: 3em;
+  line-height: 1em; }
+
+form label {
+  display: block;
+  margin-top: 1em; }
+form textarea {
+  height: 7em; }
+form input#note_submit {
+  display: block;
+  margin-top: 1em;
+  font-size: 2em; }
+
+.calendar {
+  background-color: #DDD;
+  font-family: verdana, helvetica, sans-serif;
+  font-size: 80%;
+  color: black;
+  cursor: pointer;
+  width: 200px;
+  border-collapse: collapse;
+  border: 1px solid #DDD; }
+  .calendar th {
+    padding: 2px; }
+  .calendar a {
+    color: #000;
+    text-decoration: none; }
+  .calendar td {
+    padding: 2px;
+    background-color: #FFF;
+    border: 1px solid #DDD;
+    text-align: center; }
+  .calendar td.selected {
+    background-color: #AAA; }
+  .calendar td.selected a {
+    color: #fff; }
+  .calendar td.weekend {
+    background-color: #EEE; }
+  .calendar td.today {
+    background-color: yellow; }
+    .calendar td.today a {
+      color: black; }
+  .calendar td.day a:hover {
+    color: white; }

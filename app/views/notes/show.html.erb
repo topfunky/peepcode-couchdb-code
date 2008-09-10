@@ -1,0 +1,7 @@
+<h1 id="title"><%= @note.title %></h1>
+
+<small>Updated <%= @note.updated_at.to_s(:rfc822) rescue "?" %></small>
+
+<p><%= @note.description %></p>
+
+<p><%= link_to "Edit", edit_note_path(@note) %></p>

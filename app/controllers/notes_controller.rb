@@ -53,8 +53,9 @@ class NotesController < ApplicationController
   def db
     @@couchrest ||= CouchRest.new(COUCHDB_SERVER)
     # TODO Run creation tasks, load views, etc.
-    @@couchrest.create_db("travel_topfunky") rescue nil
-    @db = @@couchrest.database("travel_topfunky")
+    db_name = ["travel", "topfunky", Rails.env].join("_")
+    @@couchrest.create_db(db_name) rescue nil
+    @db = @@couchrest.database(db_name)
   end
   
 end

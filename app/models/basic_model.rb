@@ -52,10 +52,11 @@ class BasicModel
   
   def update(attributes)
     @attributes = @attributes.merge(attributes)
+    self.type = self.class.name
     if new_record?
-      self.created_at = DateTime.now # "%Y/%m/%d %H:%M:%S %z"
+      self.created_at = Time.now
     end
-    self.updated_at = DateTime.now
+    self.updated_at = Time.now
     self.on_update if self.respond_to?(:on_update)
     @attributes
   end

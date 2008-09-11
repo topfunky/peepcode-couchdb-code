@@ -1,7 +1,7 @@
 class Note < BasicModel
 
   def initialize(attributes={})
-    defaults = {"title" => nil, "description" => nil}
+    defaults = {"title" => nil, "description" => nil, "tags" => []}
     super(defaults.merge(attributes))
   end
 

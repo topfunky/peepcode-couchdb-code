@@ -1,5 +1,5 @@
 function(doc) {
   if (doc.type == "Note") {
-    emit(doc.updated_at.data, doc);
+    emit(Date.parse(doc.updated_at.data), doc);
   }
 }

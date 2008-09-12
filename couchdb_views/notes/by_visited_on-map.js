@@ -4,6 +4,7 @@ function(doc) {
     date_array = date_array.map(function(d) {
       return parseInt(d, 10);
     });
+    // Or, Date.parse(doc.visited_on) for a timestamp
     emit(date_array, doc);
   }
 }

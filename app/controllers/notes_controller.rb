@@ -5,7 +5,7 @@ class NotesController < ApplicationController
     respond_to do |wants|
       wants.html
       wants.json { render :json => @notes.rows.to_json }
-    end    
+    end
   end
 
   def show
@@ -43,9 +43,10 @@ class NotesController < ApplicationController
         wants.html { render :action => "edit" }
       end
     end
+    # Can also catch RestClient::RequestFailed for a 412 conflict
   end
 
   def destroy
   end
-  
+
 end

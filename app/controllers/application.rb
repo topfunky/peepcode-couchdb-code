@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def database_name
-    COUCHDB_SERVER + "/" + ["demo", "topfunky", Rails.env].join("_")
+    ["demo", "topfunky", Rails.env].join("_")
   end
 
 end

@@ -1,17 +1,31 @@
 require 'couchrest'
 
 ##
-# A simple class to help use CouchDB and CouchRest with Rails.
+# A minimal class to help use CouchDB and CouchRest with Rails.
+#
+# Provides dot notation access for all attributes, one level deep.
+#
+#   note.title 
+#   # Instead of 
+#   note['title']
 #
 # You should subclass this so routes are properly generated when making forms.
 #
 #   class Note < BasicModel; end
 #
-#   couch_rest = CouchRest.new('http://localhost:5984')
-#   db         = couch_rest.database('my_db')
-#   note       = Note.new(db.get('22323232'))
-#   result     = db.save(note.attributes)
+#   note       = Note.new('my_db_name')
 #
+#   note       = Note.find('my_db_name', '4b463a09321e223b5a7aa1034e28e125')
+#   result     = note.save(params[:note])
+#
+#   notes       = Note.view('my_db_name', 'notes/by_title-map', :key => 'Restaurant')
+#   results     = notes.rows
+#
+# Subclasses can implement two methods:
+#
+#   default_attributes() # Should return a hash that all instances will be 
+#                        # initialized with.
+#   on_update()          # Called just before a model is written to the DB.
 
 class BasicModel
 
@@ -19,24 +33,18 @@ class BasicModel
 
   def self.db(database_name)
     puts "Getting #{database_name}"
-    database = CouchRest.database!(database_name)
-    # Load views
-    file_manager = CouchRest::FileManager.new(File.basename(database_name))
+    full_url_to_database = database_name
+    if full_url_to_database !~ /^http:\/\//
+      full_url_to_database = "http://localhost:5984/#{database_name}"
+    end
+    database = CouchRest.database!(full_url_to_database)
+    # Synchronize views
+    file_manager = CouchRest::FileManager.new(File.basename(full_url_to_database))
     file_manager.push_views(File.join(Rails.root, "couchdb_views"))
 
     database
   end
-
-  ##
-  # Takes a record from CouchRest ID call and turns it into something
-  # usable in Rails.
-  #
-  #   note = Note.new(db.get('283934927362'))
-  #   note.id
-  #   note._rev
-  #   note.new_record?
-  #   note.title # Any field from the record
-
+  
   def initialize(database_name, attributes={})
     @database_name = database_name
     @attributes    = default_attributes.merge(attributes)
@@ -50,7 +58,14 @@ class BasicModel
   end
 
   ##
-  # Get a document by its _id.
+  # Finds a document by ID and turns it into something
+  # usable with Rails.
+  #
+  #   note = Note.find('my_db_name', '283934927362')
+  #   note.id
+  #   note._rev
+  #   note.new_record?
+  #   note.title # Any field from the record
 
   def self.find(database_name, id)
     new(database_name, self.db(database_name).get(id))
@@ -60,7 +75,7 @@ class BasicModel
   # Takes a set of results from a CouchRest view call and turns the
   # rows into Rails-friendly objects.
   #
-  #   notes = Note.init_from_rows(db.view("notes/by_title"))
+  #   notes = Note.view('my_db_name', 'notes/by_title')
   #   notes.rows.each {|row| row.id ... }
 
   def self.view(database_name, view_name, options={})
@@ -72,10 +87,7 @@ class BasicModel
   end
 
   ##
-  # Takes a Hash, merges with existing attributes, and returns them with
-  # the intent that they will be serialized to JSON.
-  #
-  # Useful for sending to CouchRest's db.save method.
+  # Merges attributes with the existing record and saves to CouchDB.
 
   def save(attributes)
     @attributes = @attributes.merge(attributes)

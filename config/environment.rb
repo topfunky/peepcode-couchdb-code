@@ -67,8 +67,6 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector
 end
 
-COUCHDB_SERVER = "http://localhost:5984"
-
 require 'json/add/core'
 require 'json/add/rails'
 
@@ -88,5 +86,3 @@ class Time
     parse(*o['data'])
   end
 end
-
-# catch RestClient::RequestFailed 412 conflict

@@ -1,4 +1,4 @@
-<h1>Notes for '<%= @tag %>'</h1>
+<h1>Notes tagged '<%= @tag %>'</h1>
 
 <% @notes.rows.each do |note| %>
   <p><%= link_to note.title, note_path(note) %> <small><%= note.tags.join(", ") %></small></p>

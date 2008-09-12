@@ -4,6 +4,6 @@
 
 <p><%= @note.description %></p>
 
-<p><em>Tags:</em> <%= @note.tags.join(", ") %></p>
+<small><em>Tags:</em> <%= @note.tags.join(", ") %></small>
 
 <p><%= link_to "Edit", edit_note_path(@note) %></p>

@@ -63,8 +63,8 @@ class BasicModel
   #   notes = Note.init_from_rows(db.view("notes/by_title"))
   #   notes.rows.each {|row| row.id ... }
 
-  def self.view(database_name, view_name)
-    results = new(database_name, self.db(database_name).view(view_name))
+  def self.view(database_name, view_name, options={})
+    results = new(database_name, self.db(database_name).view(view_name, options))
     results.rows.each_with_index do |row, index|
       results.rows[index] = new(database_name, row['value'])
     end

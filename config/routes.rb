@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => "notes"
 
-  map.resources :notes, :fields
+  map.resources :notes, :tags
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'

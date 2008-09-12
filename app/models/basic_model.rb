@@ -19,15 +19,12 @@ class BasicModel
 
   def self.db(database_name)
     puts "Getting #{database_name}"
-    @@couchrest = CouchRest.new(COUCHDB_SERVER)
-    begin
-      @@couchrest.create_db(database_name)
-      file_manager = CouchRest::FileManager.new(database_name)
-      file_manager.push_views(File.join(Rails.root, "couchdb_views"))
-    rescue
-      nil
-    end
-    @@couchrest.database(database_name)
+    database = CouchRest.database!(database_name)
+    # Load views
+    file_manager = CouchRest::FileManager.new(File.basename(database_name))
+    file_manager.push_views(File.join(Rails.root, "couchdb_views"))
+
+    database
   end
 
   ##

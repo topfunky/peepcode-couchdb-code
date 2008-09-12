@@ -1,5 +1,0 @@
-<h1>Tags</h1>
-<% @tags.rows.each do |tag_group| %>
-  <p><%= link_to tag_group.tag, tag_path(tag_group.tag) %> (<%= tag_group.count %>)</p>
-<% end %>
-<p></p>

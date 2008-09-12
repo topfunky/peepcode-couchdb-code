@@ -13,10 +13,4 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password").
   # filter_parameter_logging :password
 
-  protected
-
-  def database_name
-    ["demo", "topfunky", Rails.env].join("_")
-  end
-
 end

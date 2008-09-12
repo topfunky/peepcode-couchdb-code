@@ -1,8 +1,12 @@
 class Note < BasicModel
 
-  def initialize(attributes={})
-    defaults = {"title" => nil, "description" => nil, "tags" => []}
-    super(defaults.merge(attributes))
+  def default_attributes
+    {
+      "title" => nil, 
+      "description" => nil, 
+      "tags" => [],
+      "visited_on" => Time.now.strftime('%Y/%m/%d')
+      }
   end
 
   ##

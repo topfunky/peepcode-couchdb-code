@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
 
   def index
-    @notes = Note.init_from_rows(db.view("notes/by_title-map"))
+    @notes = Note.view(database_name, "notes/by_title-map")
     respond_to do |wants|
       wants.html
       wants.json { render :json => @notes.rows.to_json }
@@ -9,7 +9,7 @@ class NotesController < ApplicationController
   end
 
   def show
-    @note = Note.new(db.get(params[:id]))
+    @note = Note.find(database_name, params[:id])
     respond_to do |wants|
       wants.html
       wants.json { render :json => @note.attributes.to_json }
@@ -17,24 +17,24 @@ class NotesController < ApplicationController
   end
 
   def new
-    @note = Note.new
+    @note = Note.new(database_name)
   end
 
   def create
-    note = Note.new
-    result = db.save(note.update(params[:note]))
+    note = Note.new(database_name)
+    result = note.save(params[:note])
     respond_to do |wants|
       wants.html { redirect_to note_url(result["id"]) }
     end
   end
 
   def edit
-    @note = Note.new(db.get(params[:id]))
+    @note = Note.find(database_name, params[:id])
   end
 
   def update
-    @note = Note.new(db.get(params[:id]))
-    if db.save(@note.update(params[:note]))
+    @note = Note.find(database_name, params[:id])
+    if @note.save(params[:note])
       respond_to do |wants|
         wants.html { redirect_to note_url(@note) }
       end
@@ -46,16 +46,6 @@ class NotesController < ApplicationController
   end
 
   def destroy
-  end
-
-  private
-  
-  def db
-    @@couchrest ||= CouchRest.new(COUCHDB_SERVER)
-    # TODO Run creation tasks, load views, etc.
-    db_name = ["travel", "topfunky", Rails.env].join("_")
-    @@couchrest.create_db(db_name) rescue nil
-    @db = @@couchrest.database(db_name)
   end
   
 end

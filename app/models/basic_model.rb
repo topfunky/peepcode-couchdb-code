@@ -1,4 +1,5 @@
 require 'couchrest'
+require 'lib/duck_punches/time'
 
 ##
 # A minimal class to help use CouchDB and CouchRest with Rails.

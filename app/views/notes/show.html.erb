@@ -1,8 +1,19 @@
 <h1 id="title"><%= @note.title %></h1>
 
-<small>Updated <%= @note.updated_at.to_s(:rfc822) rescue "?" %></small>
+<small>Updated <%= @note.updated_at.to_s(:rfc822) %></small>
 
 <p><%= @note.description %></p>
+
+<% if @note._attachments %>
+<ul>
+  <% @note._attachments.each do |attachment_name, attachment_attributes| %>
+    <li>
+      <%= link_to attachment_name, note_path(:id => @note, :filename => attachment_name) %> 
+      <%= number_to_human_size(attachment_attributes['length']) %>
+    </li>
+  <% end %>
+</ul>
+<% end %>
 
 <small><em>Tags:</em> <%= @note.tags.join(", ") %></small>
 

@@ -10,6 +10,19 @@ class NotesController < ApplicationController
 
   def show
     @note = Note.find(database_name, params[:id])
+
+    # Attachment
+    if params[:filename]
+      metadata = @note._attachments[params[:filename]]
+      data = Note.db(database_name).fetch_attachment(@note.id, params[:filename])
+      send_data(data, {
+        :filename    => params[:filename],
+        :type        => metadata['content_type'],
+        :disposition => "inline",
+      })
+      return
+    end
+
     respond_to do |wants|
       wants.html
       wants.json { render :json => @note.attributes.to_json }

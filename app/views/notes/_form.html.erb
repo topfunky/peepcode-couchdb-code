@@ -1,4 +1,4 @@
-<% form_for @note do |f| %>
+<% form_for @note, :html => {:multipart => true} do |f| %>
   
   <%= couchdb_rev_field f, @note %>
   
@@ -13,6 +13,9 @@
 
   <%= f.label "Visited On" %>
   <%= f.text_field "visited_on", :id => "date" %>
+
+  <%= f.label "Attachment" %>
+  <%= f.file_field "attachment" %>
 
   <%= f.submit "Save" %>
   

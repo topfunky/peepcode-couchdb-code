@@ -88,9 +88,13 @@ class BasicModel
 
   ##
   # Merges attributes with the existing record and saves to CouchDB.
+  #
+  # If attributes has an "attachment" field, it will be read and 
+  # formatted for inclusion as a CouchDB attachment to the document.
 
   def save(attributes)
     @attributes = @attributes.merge(attributes)
+    handle_attachments
     self.type = self.class.name
     if new_record?
       self.created_at = Time.now
@@ -132,6 +136,23 @@ class BasicModel
     else
       # Returns nil on failure so forms will work
       @attributes.has_key?(method_name) ? @attributes[method_name] : nil
+    end
+  end
+
+  private
+  
+  def handle_attachments
+    # Save an attachment
+    if @attributes['attachment'].is_a?(ActionController::UploadedTempfile)
+      attachment = @attributes.delete("attachment")
+      @attributes["_attachments"] ||= {}
+      filename = File.basename(attachment.original_filename)
+      @attributes["_attachments"][filename] = {
+        "content_type" => attachment.content_type,
+        "data" => attachment.read
+      }
+    else
+      @attributes.delete("attachment")
     end
   end
 

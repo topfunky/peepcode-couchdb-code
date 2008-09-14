@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def database_name
-    ["demo", "topfunky", Rails.env].join("_")
+    ["notes", "topfunky", Rails.env].join("_")
   end
 
 end

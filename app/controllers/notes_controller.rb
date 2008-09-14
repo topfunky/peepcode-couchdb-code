@@ -47,14 +47,9 @@ class NotesController < ApplicationController
 
   def update
     @note = Note.find(database_name, params[:id])
-    if @note.save(params[:note])
-      respond_to do |wants|
-        wants.html { redirect_to note_url(@note) }
-      end
-    else
-      respond_to do |wants|
-        wants.html { render :action => "edit" }
-      end
+    @note.save(params[:note])
+    respond_to do |wants|
+      wants.html { redirect_to note_url(@note) }
     end
     # Can also catch RestClient::RequestFailed for a 412 conflict
   end

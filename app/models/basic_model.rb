@@ -41,7 +41,7 @@ class BasicModel
     database = CouchRest.database!(full_url_to_database)
     # Synchronize views
     file_manager = CouchRest::FileManager.new(File.basename(full_url_to_database))
-    file_manager.push_views(File.join(Rails.root, "couchdb_views"))
+    file_manager.push_views(File.join(Rails.root, "db", "views"))
 
     database
   end

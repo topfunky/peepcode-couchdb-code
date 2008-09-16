@@ -10,7 +10,7 @@ class Note < BasicModel
   end
 
   ##
-  # Coerce things into the proper types of objects.
+  # Coerce fields into the proper types of objects.
 
   def on_update
     if (tags = @attributes['tags']) && tags.is_a?(String)

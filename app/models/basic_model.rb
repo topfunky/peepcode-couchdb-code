@@ -1,5 +1,5 @@
 require 'couchrest'
-require 'lib/duck_punches/time'
+require 'duck_punches/time'
 
 ##
 # A minimal class to help use CouchDB and CouchRest with Rails.
@@ -41,7 +41,7 @@ class BasicModel
     database = CouchRest.database!(full_url_to_database)
     # Synchronize views
     file_manager = CouchRest::FileManager.new(File.basename(full_url_to_database))
-    file_manager.push_views(File.join(Rails.root, "couchdb_views"))
+    file_manager.push_views(File.join(Rails.root, "db", "views"))
 
     database
   end
@@ -102,7 +102,10 @@ class BasicModel
     end
     self.updated_at = Time.now
     self.on_update if self.respond_to?(:on_update)
-    self.class.db(@database_name).save(@attributes)
+    result = self.class.db(@database_name).save(@attributes)
+    self._rev = result['rev']
+    self._id  = result['id']
+    self
   end
 
   ##

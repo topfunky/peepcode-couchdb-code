@@ -1,0 +1,5 @@
+=== What? No Tests?
+
+Running tests against CouchDB is quite easy. In your setup method, delete! the existing test database and create it again with database!
+
+You may need to sync views if you have custom CouchDB views that need to be used by your tests.

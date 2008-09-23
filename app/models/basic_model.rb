@@ -102,7 +102,10 @@ class BasicModel
     end
     self.updated_at = Time.now
     self.on_update if self.respond_to?(:on_update)
-    self.class.db(@database_name).save(@attributes)
+    result = self.class.db(@database_name).save(@attributes)
+    self._rev = result['rev']
+    self._id  = result['id']
+    self
   end
 
   ##

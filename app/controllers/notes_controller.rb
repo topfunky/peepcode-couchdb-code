@@ -35,9 +35,9 @@ class NotesController < ApplicationController
 
   def create
     note = Note.new(database_name)
-    result = note.save(params[:note])
+    note.save(params[:note])
     respond_to do |wants|
-      wants.html { redirect_to note_url(result["id"]) }
+      wants.html { redirect_to note_url(note) }
     end
   end
 

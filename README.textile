@@ -4,6 +4,6 @@ This is sample code from the "PeepCode Screencast on CouchDB":http://peepcode.co
 
 Use at your own risk. 
 
-See the v1-start branch for the basic application starting point.
+See the "v1-start":http://github.com/topfunky/peepcode-couchdb-code/tree/v1-start branch for the basic application starting point.
 
 Feel free to fork and send back patches.

@@ -1,0 +1,9 @@
+h1. PeepCode CouchDB Sample Code
+
+This is sample code from the "PeepCode Screencast on CouchDB":http://peepcode.com/products/couchdb-with-rails. Buy the screencast for only US$9 to learn how it works, plus a bunch more about CouchDB.
+
+Use at your own risk. 
+
+See the v1-start branch for the basic application starting point.
+
+Feel free to fork and send back patches.

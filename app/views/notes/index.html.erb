@@ -1,8 +1,10 @@
 <h1>Your Notes</h1>
 
-<% @notes.rows.each do |note| %>
-  <h2><%= link_to note.title, note_path(note) %></h2>
+<% @notes.each do |note| %>
+  <h2><%= link_to note.title, note_path(note.id) %></h2>
   <p><%= note.description %></p>
-  <small><em>Tags:</em> <%= note.tags.join(", ") %></small>
-  <p><%= link_to "Edit", edit_note_path(note) %></p>
+  <% if note.tags.is_a?(Array) -%>
+    <small><em>Tags:</em> <%= note.tags.join(", ") %></small>
+  <% end -%>
+  <p><%= link_to "Edit", edit_note_path(note.id) %></p>
 <% end %>

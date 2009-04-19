@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
 
   def index
-    @notes = Note.view(database_name, "notes/by_title-map")
+    @notes = Note.by_title #(database_name, "notes/by_title-map")
     respond_to do |wants|
       wants.html
       wants.json { render :json => @notes.rows.to_json }
@@ -9,12 +9,12 @@ class NotesController < ApplicationController
   end
 
   def show
-    @note = Note.find(database_name, params[:id])
+    @note = Note.get(params[:id])
 
     # Attachment
     if params[:filename]
-      metadata = @note._attachments[params[:filename]]
-      data = Note.db(database_name).fetch_attachment(@note.id, params[:filename])
+      metadata = @note['_attachments'][params[:filename]]
+      data = @note.fetch_attachment(params[:filename])
       send_data(data, {
         :filename    => params[:filename],
         :type        => metadata['content_type'],
@@ -30,24 +30,24 @@ class NotesController < ApplicationController
   end
 
   def new
-    @note = Note.new(database_name)
+    @note = Note.new
   end
 
   def create
-    note = Note.new(database_name)
-    note.save(params[:note])
+    note = Note.new(params[:note])
+    note.save
     respond_to do |wants|
       wants.html { redirect_to note_url(note) }
     end
   end
 
   def edit
-    @note = Note.find(database_name, params[:id])
+    @note = Note.get(params[:id])
   end
 
   def update
-    @note = Note.find(database_name, params[:id])
-    @note.save(params[:note])
+    @note = Note.get(params[:id])
+    @note.update_attributes(params[:note])
     respond_to do |wants|
       wants.html { redirect_to note_url(@note) }
     end

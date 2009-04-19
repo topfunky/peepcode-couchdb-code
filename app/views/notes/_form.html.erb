@@ -1,6 +1,6 @@
-<% form_for @note, :html => {:multipart => true} do |f| %>
+<% form_for @note, :url => (@note.new_record? ? notes_path : note_path(@note.id)), :html => {:multipart => true} do |f| %>
   
-  <%= couchdb_rev_field f, @note %>
+  <%# couchdb_rev_field f, @note %>
   
   <%= f.label "Title" %>
   <%= f.text_field :title %>
@@ -14,8 +14,8 @@
   <%= f.label "Visited On" %>
   <%= f.text_field "visited_on", :id => "date" %>
 
-  <%= f.label "Attachment" %>
-  <%= f.file_field "attachment" %>
+  <%# f.label "Attachment" %>
+  <%# f.file_field "attachment" %>
 
   <%= f.submit "Save" %>
   

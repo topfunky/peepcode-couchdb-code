@@ -4,11 +4,11 @@
 
 <p><%= @note.description %></p>
 
-<% if @note._attachments %>
+<% if @note['_attachments'] %>
 <ul>
-  <% @note._attachments.each do |attachment_name, attachment_attributes| %>
+  <% @note['_attachments'].each do |attachment_name, attachment_attributes| %>
     <li>
-      <%= link_to attachment_name, note_path(:id => @note, :filename => attachment_name) %> 
+      <%= link_to attachment_name, note_path(:id => @note.id, :filename => attachment_name) %> 
       <%= number_to_human_size(attachment_attributes['length']) %>
     </li>
   <% end %>
@@ -17,4 +17,4 @@
 
 <small><em>Tags:</em> <%= @note.tags.join(", ") %></small>
 
-<p><%= link_to "Edit", edit_note_path(@note) %></p>
+<p><%= link_to "Edit", edit_note_path(@note.id) %></p>

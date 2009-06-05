@@ -1,12 +1,12 @@
 class TagsController < ApplicationController
 
   def index
-    @tags = Note.view(database_name, "notes/by_tag-reduce", :group => true)
+    @tags = Note.by_tag :reduce => true, :group => true
   end
 
   def show
     @tag   = params[:id]
-    @notes = Note.view(database_name, "notes/by_tag-map", :key => @tag)
+    @notes = Note.by_tag :key => @tag
   end
 
 end

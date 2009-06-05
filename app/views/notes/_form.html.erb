@@ -9,13 +9,13 @@
   <%= f.text_area :description %>
 
   <%= f.label "Tags (separated by spaces)" %>
-  <%= f.text_field "tags", :value => @note.tags.join(" ") %>
+  <%= f.text_field "tags", :value => @note.tags_string %>
 
   <%= f.label "Visited On" %>
   <%= f.text_field "visited_on", :id => "date" %>
 
-  <%# f.label "Attachment" %>
-  <%# f.file_field "attachment" %>
+  <%= f.label "Attachment" %>
+  <%= f.file_field "attachment" %>
 
   <%= f.submit "Save" %>
   

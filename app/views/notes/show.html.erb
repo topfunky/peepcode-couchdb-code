@@ -15,6 +15,6 @@
 </ul>
 <% end %>
 
-<small><em>Tags:</em> <%= @note.tags.join(", ") %></small>
+<small><em>Tags:</em> <%= @note.tags_string %></small>
 
 <p><%= link_to "Edit", edit_note_path(@note.id) %></p>

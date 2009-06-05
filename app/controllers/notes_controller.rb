@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
 
   def index
-    @notes = Note.by_title #(database_name, "notes/by_title-map")
+    @notes = Note.by_title
     respond_to do |wants|
       wants.html
       wants.json { render :json => @notes.rows.to_json }
@@ -37,7 +37,7 @@ class NotesController < ApplicationController
     note = Note.new(params[:note])
     note.save
     respond_to do |wants|
-      wants.html { redirect_to note_url(note) }
+      wants.html { redirect_to note_url(note.id) }
     end
   end
 
@@ -49,7 +49,7 @@ class NotesController < ApplicationController
     @note = Note.get(params[:id])
     @note.update_attributes(params[:note])
     respond_to do |wants|
-      wants.html { redirect_to note_url(@note) }
+      wants.html { redirect_to note_url(@note.id) }
     end
     # Can also catch RestClient::RequestFailed for a 412 conflict
   end

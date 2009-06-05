@@ -1,25 +1,5 @@
 class Note < CouchRest::ExtendedDocument
 
-  #   def default_attributes
-  #     {
-  #       "title" => nil,
-  #       "description" => nil,
-  #       "tags" => [],
-  #       "visited_on" => Time.now.strftime('%Y/%m/%d')
-  #     }
-  #   end
-
-  #   ##
-  #   # Coerce fields into the proper types of objects.
-
-  #   def on_update
-  #     if (tags = @attributes['tags']) && tags.is_a?(String)
-  #       @attributes['tags'] = tags.split(" ")
-  #     end
-  #   end
-
-  # unique_id :slug
-
   use_database SERVER.default_database
 
   property :title
@@ -28,6 +8,45 @@ class Note < CouchRest::ExtendedDocument
   property :visited_on, :default => lambda { Time.now.strftime('%Y/%m/%d') }
 
   timestamps!
+
+  save_callback :before, :coerce_tags
+  #  save_callback :before, :handle_attachments
+
+  def attachment=(attachment)
+    if attachment.is_a?(ActionController::UploadedTempfile)
+      self["_attachments"] ||= {}
+      filename = File.basename(attachment.original_filename)
+      self["_attachments"][filename] = {
+        "content_type" => attachment.content_type,
+        "data" => attachment.read
+      }
+    end
+  end
+
+  ##
+  # Force tags to go through the assignment which converts them to an Array.
+
+  def coerce_tags
+    self.tags = self.tags
+  end
+
+  ##
+  # If a String is given, split it into an Array for storage.
+
+  def tags=(tags)
+    if tags.is_a?(String)
+      self['tags'] = tags.split(' ')
+    else
+      self['tags'] = tags
+    end
+  end
+
+  ##
+  # Return the tags array as a whitespace delimited string.
+
+  def tags_string
+    tags.join(' ')
+  end
 
   view_by :title, {
     :map =>
@@ -70,5 +89,22 @@ class Note < CouchRest::ExtendedDocument
       }
     }"
   }
+
+  private
+
+  def handle_attachments
+    # Save an attachment
+    if self['attachment'].is_a?(ActionController::UploadedTempfile)
+      attachment = self.delete("attachment")
+      self["_attachments"] ||= {}
+      filename = File.basename(attachment.original_filename)
+      self["_attachments"][filename] = {
+        "content_type" => attachment.content_type,
+        "data" => attachment.read
+      }
+    else
+      self.delete("attachment")
+    end
+  end
 
 end

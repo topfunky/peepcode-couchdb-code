@@ -22,7 +22,9 @@ Rails::Initializer.run do |config|
 
   # Specify gems that this application depends on.
   # They can then be installed with "rake gems:install" on new installations.
+  
   config.gem "couchrest"
+# config.gem "jchris-couchrest", :lib => "couchrest", :source => "http://gems.github.com"
   config.gem "json", :version => "= 1.1.3"
 
   config.gem "rspec", :lib => false, :version => ">= 1.2.0"

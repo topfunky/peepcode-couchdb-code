@@ -5,7 +5,7 @@ class Note < CouchRest::ExtendedDocument
   property :title
   property :description
   property :tags, :default => []
-  property :visited_on, :default => lambda { Time.now.strftime('%Y/%m/%d') }
+  property :visited_on, :default => lambda { Time.now }
 
   timestamps!
 
@@ -85,7 +85,7 @@ class Note < CouchRest::ExtendedDocument
     :map =>
     "function(doc) {
       if (doc['couchrest-type'] == 'Note' && doc.visited_on) {
-        emit(Util.dateAsArray(doc.visited_on), doc);
+        emit(Date.parse(doc.visited_on.data), doc);
       }
     }"
   }

@@ -10,7 +10,6 @@ class Note < CouchRest::ExtendedDocument
   timestamps!
 
   save_callback :before, :coerce_tags
-  #  save_callback :before, :handle_attachments
 
   def attachment=(attachment)
     if attachment.is_a?(Tempfile)

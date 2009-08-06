@@ -22,9 +22,9 @@ Rails::Initializer.run do |config|
 
   # Specify gems that this application depends on.
   # They can then be installed with "rake gems:install" on new installations.
-  
+
   config.gem "couchrest"
-# config.gem "jchris-couchrest", :lib => "couchrest", :source => "http://gems.github.com"
+  # config.gem "jchris-couchrest", :lib => "couchrest", :source => "http://gems.github.com"
   config.gem "json", :version => "= 1.1.3"
 
   config.gem "rspec", :lib => false, :version => ">= 1.2.0"
@@ -55,7 +55,7 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random,
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_travel_app_session',
+    :session_key => '_notes_app_session',
     :secret      => 'a89c0888925e23bde7d172c91eace6c42b7e0c35b5300fefb33c7fd2d1d9f884413943d2f2156e1aea4a0f83ef6d6c42fe8279ecf97ed2f778fd218d9e60108a'
   }
 
@@ -76,8 +76,8 @@ end
 require 'json/add/core'
 require 'json/add/rails'
 
+require 'couchrest/support/rails'
+
 ENV['TZ'] = 'UTC'
 
-SERVER = CouchRest.new
-SERVER.default_database = ["notes", Rails.env].join("_")
 

@@ -19,7 +19,7 @@ class Note < CouchRest::ExtendedDocument
         :name => attachment_filename,
         :content_type => attachment.content_type
       }
-      if self['_attachments'].has_key?(attachment_filename)
+      if self.has_key?('_attachments') && self['_attachments'].has_key?(attachment_filename)
         update_attachment(attachment_options)
       else
         create_attachment(attachment_options)

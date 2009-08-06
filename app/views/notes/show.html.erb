@@ -10,6 +10,7 @@
     <li>
       <%= link_to attachment_name, note_path(:id => @note.id, :filename => attachment_name) %> 
       <%= number_to_human_size(attachment_attributes['length']) %>
+      <span class="content_type"><%= attachment_attributes['content_type'] %></span>
     </li>
   <% end %>
 </ul>

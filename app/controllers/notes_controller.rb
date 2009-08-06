@@ -14,7 +14,7 @@ class NotesController < ApplicationController
     # Attachment
     if params[:filename]
       metadata = @note['_attachments'][params[:filename]]
-      data = @note.fetch_attachment(params[:filename])
+      data = @note.read_attachment(params[:filename])
       send_data(data, {
         :filename    => params[:filename],
         :type        => metadata['content_type'],

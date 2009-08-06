@@ -13,13 +13,18 @@ class Note < CouchRest::ExtendedDocument
   #  save_callback :before, :handle_attachments
 
   def attachment=(attachment)
-    if attachment.is_a?(ActionController::UploadedTempfile)
-      self["_attachments"] ||= {}
-      filename = File.basename(attachment.original_filename)
-      self["_attachments"][filename] = {
-        "content_type" => attachment.content_type,
-        "data" => attachment.read
+    if attachment.is_a?(Tempfile)
+      attachment_filename = File.basename(attachment.original_filename)
+      attachment_options = {
+        :file => attachment,
+        :name => attachment_filename,
+        :content_type => attachment.content_type
       }
+      if self['_attachments'].has_key?(attachment_filename)
+        update_attachment(attachment_options)
+      else
+        create_attachment(attachment_options)
+      end
     end
   end
 

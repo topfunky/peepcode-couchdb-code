@@ -61,3 +61,7 @@ form input#note_submit {
       color: black; }
   .calendar td.day a:hover {
     color: white; }
+
+.content_type {
+  color: #666;
+  font-size: 0.8em; }

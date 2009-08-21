@@ -1,0 +1,7 @@
+Updating the screencast to CouchDB 0.19:
+	Installation:
+	- Mention CouchDBX from JonGretar on GitHub http://github.com/JonGretar/couchdbx/tree/master
+	CouchRest RubyGem:
+	- Use couchrest-couchrest on GitHub. http://github.com/couchrest/couchrest/tree/master
+	Rails App:
+	

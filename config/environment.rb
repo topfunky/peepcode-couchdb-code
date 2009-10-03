@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   # They can then be installed with "rake gems:install" on new installations.
 
   config.gem "couchrest", :version => ">= 0.33"
-  config.gem "json", :version => "= 1.1.3"
+  config.gem "json", :version => ">= 1.1.3"
 
   config.gem "rspec", :lib => false, :version => ">= 1.2.0"
   config.gem "rspec-rails", :lib => false, :version => ">= 1.2.0"

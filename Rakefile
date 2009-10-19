@@ -8,3 +8,13 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+
+namespace :couchdb do
+
+  desc "Synchronize CouchDB views"
+  task :sync do
+    system "cd db/notes && couchapp push"
+  end
+
+end
+

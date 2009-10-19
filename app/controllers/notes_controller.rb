@@ -1,7 +1,7 @@
 class NotesController < ApplicationController
 
   def index
-    @notes = Note.view(database_name, "notes/by_title-map")
+    @notes = Note.view(database_name, "notes/by_title")
     respond_to do |wants|
       wants.html
       wants.json { render :json => @notes.rows.to_json }

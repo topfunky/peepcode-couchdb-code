@@ -1,9 +1,83 @@
 h1. PeepCode CouchDB Sample Code
 
-This is sample code from the "PeepCode Screencast on CouchDB":http://peepcode.com/products/couchdb-with-rails. Buy the screencast for only US$9 to learn how it works, plus a bunch more about CouchDB.
+This is sample code from the "PeepCode Screencast on
+CouchDB":http://peepcode.com/products/couchdb-with-rails. Buy the
+screencast for only US$9 to learn how it works, plus a bunch more
+about CouchDB.
 
 Use at your own risk. 
 
-See the "v1-start":http://github.com/topfunky/peepcode-couchdb-code/tree/v1-start branch for the basic application starting point.
+See the
+"v1-start":http://github.com/topfunky/peepcode-couchdb-code/tree/v1-start
+branch for the basic application starting point.
 
 Feel free to fork and send back patches.
+
+h2. Steps to Use couchapp
+
+The Python-based couchapp command-line utility syncs views (stored
+procedures) to the database.
+
+h3. Install easy_install and couchapp
+
+Install Python's easy_install package manager and then couchapp.
+
+  curl -O http://peak.telecommunity.com/dist/ez_setup.py
+  sudo python ez_setup.py -U setuptools
+  sudo easy_install -U couchapp
+
+"CouchApp source":http://github.com/couchapp/couchapp
+
+h3. Initialize with CouchApp
+
+Create a scaffold for the CouchDB views.
+
+  cd db
+  couchapp generate notes
+  couchapp init --db=http://localhost:5984/notes_topfunky_development
+  mv .couchapprc notes/
+
+The .couchapprc file has settings for which database to synchronize
+to.
+
+h3. Create Views
+
+Copy existing views to @db/couchdb/views@.
+
+Structure is as follows:
+
+* views/
+** by_tag/
+*** map.js
+*** reduce.js
+** by_title/
+*** map.js
+
+NOTE: Convention is to use camel case, but anything works: byTag, byTitle
+
+Each subdirectory must have a @map.js@. The @reduce.js@ is optional.
+
+You can include other files in your @map@ and @reduce@ views. Use
+
+  // !code lib/lib.js
+
+I've made a @lib@ directory with a @lib.js@ file for this purpose.
+
+h3. Push Views
+
+Synchronize the views to the database (will automatically create it):
+
+  cd db/notes
+  couchapp push
+
+TIP: Write a rake task to do this from the root of the app.
+
+h2. Other
+
+* Install the @couchrest@ RubyGem.
+* In @environment.rb@, @config.gem "couchrest"@
+* Run @rake rails:update@.
+* Views should be called with "notes/by_title" (no -map)
+
+
+

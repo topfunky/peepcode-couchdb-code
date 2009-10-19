@@ -77,7 +77,9 @@ h2. Other
 * Install the @couchrest@ RubyGem.
 * In @environment.rb@, @config.gem "couchrest"@
 * Run @rake rails:update@.
+* Don't sync views in basic_model.rb
 * Views should be called with "notes/by_title" (no -map)
-
+* If a @reduce.js@ exists, you can call just the map with @:reduce => false@
+* Attachment class in basic_model is just @Tempfile@
 
 
